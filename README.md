@@ -1,42 +1,54 @@
-# sv
+# Saru
 
-Everything you need to build a Svelte project, powered by [`sv`](https://github.com/sveltejs/cli).
+A café web shop built with SvelteKit, Tailwind CSS, and AI-powered drink and snack recommendations.
 
-## Creating a project
+**Live demo:** https://saru-green.vercel.app
 
-If you're seeing this, you've probably already done this step. Congrats!
+## Features
 
-```sh
-# create a new project
-npx sv create my-app
-```
+- Browse menu by category with milk and variation options
+- Add items to bag with temperature, milk, and variation selection
+- AI-powered "For you" page — describe your mood, get two personalised drink and snack recommendations
+- Order flow with confirmation page
 
-To recreate this project with the same configuration:
+## Tech stack
 
-```sh
-# recreate this project
-npx sv@0.15.1 create --template minimal --types ts --add tailwindcss="plugins:none" eslint prettier --no-install saru
-```
+- SvelteKit + TypeScript
+- Tailwind CSS v4
+- Svelte 5 runes for cart state
+- Groq API (via OpenAI-compatible SDK) for recommendations
+- Deployed on Vercel
 
-## Developing
+## Running locally
 
-Once you've created a project and installed dependencies with `npm install` (or `pnpm install` or `yarn`), start a development server:
-
-```sh
+```bash
+npm install
 npm run dev
-
-# or start the server and open the app in a new browser tab
-npm run dev -- --open
 ```
 
-## Building
+### Environment variables
 
-To create a production version of your app:
+Create a `.env` file at the project root:
 
-```sh
-npm run build
+```
+GROQ_API_KEY=your_groq_api_key_here
 ```
 
-You can preview the production build with `npm run preview`.
+Get a free API key at [console.groq.com](https://console.groq.com). The key is used server-side only for the `/recommend` endpoint.
 
-> To deploy your app, you may need to install an [adapter](https://svelte.dev/docs/kit/adapters) for your target environment.
+## Structure
+
+```
+src/
+  lib/
+    menu.ts          # Menu data — edit here to update the menu and AI prompt
+    cart.svelte.ts   # Cart state (Svelte 5 runes)
+    components/      # Nav, MenuCard, AddToCartModal
+  routes/
+    /                # Home
+    /menu            # Full menu with category filter
+    /recommend       # AI recommendations
+    /cart            # Bag
+    /order           # Order confirmation
+    api/recommend    # Groq API endpoint
+```
